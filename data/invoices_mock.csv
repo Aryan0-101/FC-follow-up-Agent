@@ -1,0 +1,7 @@
+invoice_no,client_name,client_email,amount,currency,due_date,follow_up_count,contact_person,payment_link
+INV-2024-001,Rajesh Kapoor,rajesh@kapoortech.com,45000,INR,2026-05-05,0,Mr. Kapoor,https://pay.example.com/INV-2024-001
+INV-2024-002,Priya Sharma,priya@sharmacorp.in,120000,INR,2026-04-28,1,Ms. Sharma,https://pay.example.com/INV-2024-002
+INV-2024-003,Amit Verma,amit@vermalogistics.com,78500,INR,2026-04-20,2,Mr. Verma,https://pay.example.com/INV-2024-003
+INV-2024-004,Sunita Patel,sunita@patelmfg.com,210000,INR,2026-04-10,3,Ms. Patel,https://pay.example.com/INV-2024-004
+INV-2024-005,Ravi Gupta,ravi@guptaexports.com,55000,INR,2026-03-20,4,Mr. Gupta,https://pay.example.com/INV-2024-005
+INV-2024-006,Future Client,future@client.com,10000,INR,2026-06-01,0,Mr. Future,https://pay.example.com/INV-2024-006

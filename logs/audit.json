@@ -1,0 +1,44 @@
+[
+  {
+    "invoice_no": "INV-2024-001",
+    "client_name": "Rajesh Kapoor",
+    "client_email_masked": "r*****@kapoortech.com",
+    "amount": 45000.0,
+    "days_overdue": 3,
+    "stage": 1,
+    "tone": "warm_friendly",
+    "email_subject": "A Quick Friendly Reminder, Rajesh \ud83d\ude0a",
+    "email_body_preview": "Hi Rajesh,\n\nI hope you're doing well! I just wanted to reach out with a gentle reminder about invoice INV-2024-001 for INR 45,000, which was due on 05 May 2026.\n\nI completely understand how busy thing",
+    "send_status": "dry_run",
+    "error_message": null,
+    "timestamp": "2026-05-08T16:12:47.870515"
+  },
+  {
+    "invoice_no": "INV-2024-002",
+    "client_name": "Priya Sharma",
+    "client_email_masked": "p****@sharmacorp.in",
+    "amount": 120000.0,
+    "days_overdue": 10,
+    "stage": 2,
+    "tone": "polite_firm",
+    "email_subject": "Payment Reminder - Invoice INV-2024-002 (Due: 28 Apr 2026)",
+    "email_body_preview": "Dear Ms. Sharma,\n\nWe hope this message finds you well. We are writing to follow up on Invoice INV-2024-002 dated 28 Apr 2026 with an outstanding amount of INR 120,000.\n\nAs of today, this invoice is 10",
+    "send_status": "dry_run",
+    "error_message": null,
+    "timestamp": "2026-05-08T16:15:16.563060"
+  },
+  {
+    "invoice_no": "INV-2024-003",
+    "client_name": "Amit Verma",
+    "client_email_masked": "a***@vermalogistics.com",
+    "amount": 78500.0,
+    "days_overdue": 18,
+    "stage": 3,
+    "tone": "formal_serious",
+    "email_subject": "Payment Demand Notice \u2013 Invoice INV-2024-003 (Overdue 18 Days)",
+    "email_body_preview": "Dear Mr. Verma,\n\nWe write to formally address the outstanding payment for Invoice No. INV-2024-003, dated 20 Apr 2026, in the amount of INR 78,500, which remains overdue by 18 days.\n\nDespite our previ",
+    "send_status": "dry_run",
+    "error_message": null,
+    "timestamp": "2026-05-08T16:17:03.228866"
+  }
+]
