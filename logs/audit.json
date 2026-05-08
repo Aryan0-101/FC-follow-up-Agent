@@ -1,31 +1,31 @@
 [
   {
-    "invoice_no": "INV-2024-001",
-    "client_name": "Rajesh Kapoor",
-    "client_email_masked": "r*****@kapoortech.com",
-    "amount": 45000.0,
-    "days_overdue": 3,
-    "stage": 1,
-    "tone": "warm_friendly",
-    "email_subject": "A Quick Friendly Reminder, Rajesh \ud83d\ude0a",
-    "email_body_preview": "Hi Rajesh,\n\nI hope you're doing well! I just wanted to reach out with a gentle reminder about invoice INV-2024-001 for INR 45,000, which was due on 05 May 2026.\n\nI completely understand how busy thing",
-    "send_status": "dry_run",
+    "invoice_no": "INV-2024-005",
+    "client_name": "Ravi Gupta",
+    "client_email_masked": "r***@guptaexports.com",
+    "amount": 55000.0,
+    "days_overdue": 49,
+    "stage": 5,
+    "tone": "legal_flag",
+    "email_subject": null,
+    "email_body_preview": null,
+    "send_status": "escalated",
     "error_message": null,
-    "timestamp": "2026-05-08T16:12:47.870515"
+    "timestamp": "2026-05-08T17:42:17.967113"
   },
   {
-    "invoice_no": "INV-2024-002",
-    "client_name": "Priya Sharma",
-    "client_email_masked": "p****@sharmacorp.in",
-    "amount": 120000.0,
-    "days_overdue": 10,
-    "stage": 2,
-    "tone": "polite_firm",
-    "email_subject": "Payment Reminder - Invoice INV-2024-002 (Due: 28 Apr 2026)",
-    "email_body_preview": "Dear Ms. Sharma,\n\nWe hope this message finds you well. We are writing to follow up on Invoice INV-2024-002 dated 28 Apr 2026 with an outstanding amount of INR 120,000.\n\nAs of today, this invoice is 10",
+    "invoice_no": "INV-2024-004",
+    "client_name": "Sunita Patel",
+    "client_email_masked": "s*****@patelmfg.com",
+    "amount": 210000.0,
+    "days_overdue": 28,
+    "stage": 4,
+    "tone": "stern_urgent",
+    "email_subject": "FINAL NOTICE - Urgent Payment Required - Invoice INV-2024-004",
+    "email_body_preview": "Ms. Patel,\n\nThis is the FINAL automated notice regarding your overdue invoice. You have failed to respond to three previous payment reminders.\n\nINVOICE DETAILS:\nInvoice Number: INV-2024-004\nAmount Due: INR 210,000\nDue Date: 10 Apr 2026\nDays Overdue: 28\n\nURGENT ACTION REQUIRED:\nYou must remit full payment within 24 hours of this notice. Failure to comply will result in immediate escalation to our legal and recovery team. All associated collection costs, legal fees, and interest charges will be your responsibility.\n\nThis is not a warning\u2014this is your final opportunity to resolve this matter without legal consequences.\n\nMake immediate payment here: https://pay.example.com/INV-2024-004\n\nDo not ignore this notice. Our legal department will proceed with filing if payment is not received within 24 hours.\n\nRegards,\nAccounts Receivable Department",
     "send_status": "dry_run",
     "error_message": null,
-    "timestamp": "2026-05-08T16:15:16.563060"
+    "timestamp": "2026-05-08T17:42:18.000287"
   },
   {
     "invoice_no": "INV-2024-003",
@@ -36,9 +36,23 @@
     "stage": 3,
     "tone": "formal_serious",
     "email_subject": "Payment Demand Notice \u2013 Invoice INV-2024-003 (Overdue 18 Days)",
-    "email_body_preview": "Dear Mr. Verma,\n\nWe write to formally address the outstanding payment for Invoice No. INV-2024-003, dated 20 Apr 2026, in the amount of INR 78,500, which remains overdue by 18 days.\n\nDespite our previ",
+    "email_body_preview": "Dear Mr. Verma,\n\nWe write to formally address the outstanding payment for Invoice No. INV-2024-003, dated 20 Apr 2026, in the amount of INR 78,500, which remains overdue by 18 days.\n\nDespite our previous communications dated [Reminder 1] and [Reminder 2], we have not yet received your payment or any correspondence regarding this matter. We find it necessary to formally request immediate settlement of the outstanding balance.\n\nPlease be advised that continued non-payment may result in the suspension of credit terms and future trading privileges with our organization. Furthermore, we reserve the right to take appropriate measures to recover the outstanding debt, which may include engagement with third-party collection agencies or legal proceedings.\n\nWe hereby demand payment of INR 78,500 within 48 hours of receipt of this notice. To process your payment promptly, please use the secure payment link below:\n\nPayment Link: https://pay.example.com/INV-2024-003\n\nIf payment has already been initiated, please disregard this notice and provide us with the transaction reference at your earliest convenience.\n\nWe trust you will treat this matter with the urgency it warrants and look forward to your prompt response.\n\nYours sincerely,\n\nAccounts Receivable Department\n[Company Name]",
     "send_status": "dry_run",
     "error_message": null,
-    "timestamp": "2026-05-08T16:17:03.228866"
+    "timestamp": "2026-05-08T17:42:18.005256"
+  },
+  {
+    "invoice_no": "INV-2024-002",
+    "client_name": "Priya Sharma",
+    "client_email_masked": "p****@sharmacorp.in",
+    "amount": 120000.0,
+    "days_overdue": 10,
+    "stage": 2,
+    "tone": "polite_firm",
+    "email_subject": "Payment Reminder - Invoice INV-2024-002 (Due: 28 Apr 2026)",
+    "email_body_preview": "Dear Ms. Sharma,\n\nWe hope this message finds you well. We are writing to follow up on Invoice INV-2024-002 dated 28 Apr 2026 with an outstanding amount of INR 120,000.\n\nAs of today, this invoice is 10 days overdue. We understand that oversights can happen, and we wanted to bring this to your attention as a courtesy reminder, as a previous reminder was already sent regarding this matter.\n\nWe kindly request that you review the invoice and confirm the expected payment date at your earliest convenience. To facilitate a quick resolution, you may process the payment directly via our secure payment portal: https://pay.example.com/INV-2024-002\n\nIf the payment has already been processed, please disregard this message and accept our thanks. Otherwise, we would appreciate your prompt attention to settle this outstanding balance.\n\nPlease feel free to contact us if you have any questions or require further assistance.\n\nThank you for your understanding and cooperation.\n\nBest regards,\nAccounts Receivable Team",
+    "send_status": "dry_run",
+    "error_message": null,
+    "timestamp": "2026-05-08T17:42:18.004067"
   }
 ]

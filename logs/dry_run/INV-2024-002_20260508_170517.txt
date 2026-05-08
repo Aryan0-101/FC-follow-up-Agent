@@ -1,0 +1,29 @@
+
+=== DRY RUN EMAIL ===
+TO: priya@sharmacorp.in
+FROM: Finance Team TCI <finance@yourcompany.com>
+SUBJECT: Payment Reminder - Invoice INV-2024-002 (Due: 28 Apr 2026)
+TONE: polite_firm
+TIMESTAMP: 20260508_170517
+========================
+
+Dear Ms. Sharma,
+
+We hope this message finds you well. We are writing to follow up on Invoice INV-2024-002 dated 28 Apr 2026 with an outstanding amount of INR 120,000.
+
+As of today, this invoice is 10 days overdue. We understand that oversights can happen, and we wanted to bring this to your attention as a courtesy reminder, as a previous reminder was already sent regarding this matter.
+
+We kindly request that you review the invoice and confirm the expected payment date at your earliest convenience. To facilitate a quick resolution, you may process the payment directly via our secure payment portal: https://pay.example.com/INV-2024-002
+
+If the payment has already been processed, please disregard this message and accept our thanks. Otherwise, we would appreciate your prompt attention to settle this outstanding balance.
+
+Please feel free to contact us if you have any questions or require further assistance.
+
+Thank you for your understanding and cooperation.
+
+Best regards,
+Accounts Receivable Team
+
+---
+CTA: https://pay.example.com/INV-2024-002
+Payment Link: https://pay.example.com/INV-2024-002

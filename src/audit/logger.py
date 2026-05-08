@@ -34,7 +34,7 @@ def _log_to_sqlite(entry: AuditEntry) -> None:
             "stage": entry.stage,
             "tone": entry.tone,
             "email_subject": entry.email_subject,
-            "email_body_preview": (entry.email_body_preview or "")[:200],
+            "email_body_preview": entry.email_body_preview,
             "send_status": entry.send_status,
             "error_message": entry.error_message,
             "timestamp": entry.timestamp.isoformat()

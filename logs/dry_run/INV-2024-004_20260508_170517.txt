@@ -1,0 +1,34 @@
+
+=== DRY RUN EMAIL ===
+TO: sunita@patelmfg.com
+FROM: Finance Team TCI <finance@yourcompany.com>
+SUBJECT: FINAL NOTICE - Urgent Payment Required - Invoice INV-2024-004
+TONE: stern_urgent
+TIMESTAMP: 20260508_170517
+========================
+
+Ms. Patel,
+
+This is the FINAL automated notice regarding your overdue invoice. You have failed to respond to three previous payment reminders.
+
+INVOICE DETAILS:
+Invoice Number: INV-2024-004
+Amount Due: INR 210,000
+Due Date: 10 Apr 2026
+Days Overdue: 28
+
+URGENT ACTION REQUIRED:
+You must remit full payment within 24 hours of this notice. Failure to comply will result in immediate escalation to our legal and recovery team. All associated collection costs, legal fees, and interest charges will be your responsibility.
+
+This is not a warning—this is your final opportunity to resolve this matter without legal consequences.
+
+Make immediate payment here: https://pay.example.com/INV-2024-004
+
+Do not ignore this notice. Our legal department will proceed with filing if payment is not received within 24 hours.
+
+Regards,
+Accounts Receivable Department
+
+---
+CTA: https://pay.example.com/INV-2024-004
+Payment Link: https://pay.example.com/INV-2024-004

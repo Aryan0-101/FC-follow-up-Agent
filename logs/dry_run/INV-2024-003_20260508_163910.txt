@@ -1,0 +1,33 @@
+
+=== DRY RUN EMAIL ===
+TO: amit@vermalogistics.com
+FROM: Finance Team TCI <finance@yourcompany.com>
+SUBJECT: Payment Demand Notice – Invoice INV-2024-003 (Overdue 18 Days)
+TONE: formal_serious
+TIMESTAMP: 20260508_163910
+========================
+
+Dear Mr. Verma,
+
+We write to formally address the outstanding payment for Invoice No. INV-2024-003, dated 20 Apr 2026, in the amount of INR 78,500, which remains overdue by 18 days.
+
+Despite our previous communications dated [Reminder 1] and [Reminder 2], we have not yet received your payment or any correspondence regarding this matter. We find it necessary to formally request immediate settlement of the outstanding balance.
+
+Please be advised that continued non-payment may result in the suspension of credit terms and future trading privileges with our organization. Furthermore, we reserve the right to take appropriate measures to recover the outstanding debt, which may include engagement with third-party collection agencies or legal proceedings.
+
+We hereby demand payment of INR 78,500 within 48 hours of receipt of this notice. To process your payment promptly, please use the secure payment link below:
+
+Payment Link: https://pay.example.com/INV-2024-003
+
+If payment has already been initiated, please disregard this notice and provide us with the transaction reference at your earliest convenience.
+
+We trust you will treat this matter with the urgency it warrants and look forward to your prompt response.
+
+Yours sincerely,
+
+Accounts Receivable Department
+[Company Name]
+
+---
+CTA: https://pay.example.com/INV-2024-003
+Payment Link: https://pay.example.com/INV-2024-003

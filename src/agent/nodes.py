@@ -77,7 +77,7 @@ def audit_node(state: AgentState) -> AgentState:
         stage=int(record.stage) if record.stage else None,
         tone=get_tone(record.stage) if record.stage else None,
         email_subject=email.subject if email else None,
-        email_body_preview=email.body[:200] if email else None,
+        email_body_preview=email.body if email else None,
         send_status=status,
         error_message="; ".join(state.errors) if state.errors else None
     )

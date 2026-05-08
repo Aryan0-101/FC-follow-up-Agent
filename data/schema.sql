@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS audit_log (
     stage INTEGER,
     tone TEXT,
     email_subject TEXT,
-    email_body_preview TEXT,   -- First 200 chars only
+    email_body_preview TEXT,
     send_status TEXT,          -- sent | dry_run | failed | escalated
     error_message TEXT,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP

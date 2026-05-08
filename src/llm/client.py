@@ -55,13 +55,20 @@ def generate_email(record: InvoiceRecord) -> EmailOutput:
             # Strip any accidental markdown fences
             raw_json = raw_json.replace("```json", "").replace("```", "").strip()
             
-            # Simple heuristic to extract JSON if there's preamble
-            if "{" in raw_json and "}" in raw_json:
-                start_index = raw_json.find("{")
-                end_index = raw_json.rfind("}") + 1
-                raw_json = raw_json[start_index:end_index]
-                
-            data = json.loads(raw_json)
+            # Robust JSON extraction
+            try:
+                # Try direct parse first
+                data = json.loads(raw_json)
+            except json.JSONDecodeError:
+                # If direct parse fails, try finding the first { and last }
+                if "{" in raw_json and "}" in raw_json:
+                    start_index = raw_json.find("{")
+                    end_index = raw_json.rfind("}") + 1
+                    raw_json = raw_json[start_index:end_index]
+                    data = json.loads(raw_json)
+                else:
+                    raise
+            
             email_output = EmailOutput(**data)
             return email_output
             

@@ -5,6 +5,7 @@ import os
 import sys
 from datetime import datetime
 
+
 # Add project root to sys.path to resolve 'src' imports
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -14,6 +15,7 @@ from src.agent.classifier import classify_record
 from src.agent.graph import build_agent_graph
 from src.models import AgentState
 import uuid
+from concurrent.futures import ThreadPoolExecutor
 
 st.set_page_config(
     page_title="Finance Email Agent",
@@ -69,7 +71,7 @@ st.markdown("""
     /* Badges */
     .stBadge { padding: 0.2rem 0.6rem; border-radius: 10px; font-weight: bold; }
 </style>
-""", unsafe_allow_stdio=True, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 # Header
 col_title, col_mode = st.columns([3, 1])
@@ -159,20 +161,26 @@ if os.path.exists(config.AUDIT_JSON_PATH):
         with open(config.AUDIT_JSON_PATH, "r", encoding="utf-8") as f:
             audit_data = json.load(f)
         if audit_data:
-            # Show last 10 entries in a stylized feed
-            for entry in reversed(audit_data[-10:]):
+            for entry in reversed(audit_data[-15:]):
                 status_color = "#22c55e" if entry['send_status'] in ['sent', 'dry_run'] else "#ef4444"
                 if entry['send_status'] == 'escalated': status_color = "#a855f7"
                 
-                st.markdown(f"""
-                <div class="audit-entry">
-                    <span style="font-family:monospace; color:#64748b">{entry['timestamp'][:19]}</span>
-                    <span style="font-weight:bold; width:100px">{entry['invoice_no']}</span>
-                    <span style="flex:1">{entry['client_name']}</span>
-                    <span style="color:#64748b; font-size:0.75rem">{entry['tone'] or 'N/A'}</span>
-                    <span style="background:{status_color}22; color:{status_color}; padding:2px 8px; border-radius:10px; font-weight:bold">{entry['send_status']}</span>
-                </div>
-                """, unsafe_allow_html=True)
+                with st.container():
+                    col_meta, col_status = st.columns([5, 1])
+                    with col_meta:
+                        st.markdown(f"**{entry['invoice_no']}** | {entry['client_name']} | {entry['timestamp'][:19]}")
+                    with col_status:
+                        st.markdown(f"<span style='background:{status_color}22; color:{status_color}; padding:2px 8px; border-radius:10px; font-weight:bold'>{entry['send_status']}</span>", unsafe_allow_html=True)
+                    
+                    if entry.get('email_subject'):
+                        with st.expander(f"👁 View Email: {entry['email_subject'][:50]}..."):
+                            st.markdown(f"**Subject:** {entry['email_subject']}")
+                            st.divider()
+                            body_content = entry.get('email_body_preview') or 'No body content.'
+                            st.markdown("**Body:**")
+                            st.info(body_content)
+                            st.caption(f"Tone: {entry.get('tone', 'N/A')}")
+                    st.divider()
         else:
             st.info("Audit log is empty.")
     except Exception as e:
@@ -182,21 +190,31 @@ else:
 
 # Run agent
 if run_btn and classified:
-    with st.spinner("Running agent..."):
+    with st.spinner("🚀 Agent running in parallel..."):
         graph = build_agent_graph()
-        progress = st.progress(0)
         
-        # In a real app, you might want to process records differently
-        for i, record in enumerate(classified):
-            if record.stage and record.stage != 0:
+        # Filter records that need processing
+        to_process = [r for r in classified if r.stage and r.stage != 0]
+        
+        if to_process:
+            progress_bar = st.progress(0)
+            status_text = st.empty()
+            
+            def process_record(record):
                 state = AgentState(
                     records=[record],
                     current_record=record, 
                     run_id=str(uuid.uuid4())
                 )
-                graph.invoke(state)
-            progress.progress((i+1)/len(classified))
-        
-        st.success("✅ Agent run complete! Refresh to see updated audit log.")
-        st.balloons()
-        st.rerun()
+                return graph.invoke(state)
+
+            # Process in parallel (max 5 threads to avoid rate limits)
+            with ThreadPoolExecutor(max_workers=5) as executor:
+                results = list(executor.map(process_record, to_process))
+                progress_bar.progress(100)
+            
+            st.success(f"✅ Agent run complete! Processed {len(to_process)} invoices.")
+            st.balloons()
+            st.rerun()
+        else:
+            st.info("No invoices require follow-up today.")

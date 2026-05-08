@@ -1,0 +1,28 @@
+
+=== DRY RUN EMAIL ===
+TO: rajesh@kapoortech.com
+FROM: Finance Team TCI <finance@yourcompany.com>
+SUBJECT: A Quick Friendly Reminder, Rajesh 😊
+TONE: warm_friendly
+TIMESTAMP: 20260508_170612
+========================
+
+Hi Rajesh,
+
+I hope you're doing well! I just wanted to reach out with a gentle reminder about invoice INV-2024-001 for INR 45,000, which was due on 05 May 2026.
+
+I completely understand how busy things can get, and sometimes these little things slip through the cracks! If you've already sent the payment, please feel free to disregard this message.
+
+If not, here's a quick link to make everything easier for you: https://pay.example.com/INV-2024-001
+
+Please don't hesitate to reach out if you have any questions or if there's anything we can help you with. We're always here to support you!
+
+Thank you so much for your continued partnership. Wishing you all the best!
+
+Warm regards,
+[Your Name]
+Accounts Receivable Team
+
+---
+CTA: https://pay.example.com/INV-2024-001
+Payment Link: https://pay.example.com/INV-2024-001
