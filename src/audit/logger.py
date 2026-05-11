@@ -3,17 +3,44 @@ import os
 from datetime import datetime
 from sqlalchemy import create_engine, text
 from src.config import config
-from src.models import AuditEntry
+from src.models import AuditEntry, WorkflowLog, AILog, SecurityLog
+from typing import Union
 import logging
 
 logger = logging.getLogger(__name__)
 
 engine = create_engine(f"sqlite:///{config.DB_PATH}")
 
+# Paths for different log categories
+LOG_PATHS = {
+    "audit": config.AUDIT_JSON_PATH,
+    "workflow": "logs/workflow.json",
+    "ai": "logs/ai_observability.json",
+    "security": "logs/security.json"
+}
+
 def log_audit_entry(entry: AuditEntry) -> None:
-    """Write audit entry to SQLite and JSON log."""
+    """Legacy wrapper for audit entries."""
+    log_event(entry, "audit")
     _log_to_sqlite(entry)
-    _log_to_json(entry)
+
+def log_event(event: Union[AuditEntry, WorkflowLog, AILog, SecurityLog], category: str) -> None:
+    """Write structured JSON log to the appropriate category file."""
+    path = LOG_PATHS.get(category, "logs/misc.json")
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    
+    existing = []
+    if os.path.exists(path):
+        with open(path, "r", encoding="utf-8") as f:
+            try:
+                existing = json.load(f)
+            except json.JSONDecodeError:
+                existing = []
+    
+    existing.append(event.model_dump(mode="json"))
+    
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(existing, f, indent=2, default=str)
 
 def _log_to_sqlite(entry: AuditEntry) -> None:
     with engine.connect() as conn:
@@ -40,19 +67,3 @@ def _log_to_sqlite(entry: AuditEntry) -> None:
             "timestamp": entry.timestamp.isoformat()
         })
         conn.commit()
-
-def _log_to_json(entry: AuditEntry) -> None:
-    os.makedirs(os.path.dirname(config.AUDIT_JSON_PATH), exist_ok=True)
-    
-    existing = []
-    if os.path.exists(config.AUDIT_JSON_PATH):
-        with open(config.AUDIT_JSON_PATH, "r", encoding="utf-8") as f:
-            try:
-                existing = json.load(f)
-            except json.JSONDecodeError:
-                existing = []
-    
-    existing.append(entry.model_dump(mode="json"))
-    
-    with open(config.AUDIT_JSON_PATH, "w", encoding="utf-8") as f:
-        json.dump(existing, f, indent=2, default=str)

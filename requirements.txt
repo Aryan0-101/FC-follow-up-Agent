@@ -14,3 +14,6 @@ langchain-community>=0.2.0
 langsmith>=0.1.0
 sendgrid>=6.11.0
 langchain-nvidia-ai-endpoints
+fastapi
+uvicorn
+python-multipart

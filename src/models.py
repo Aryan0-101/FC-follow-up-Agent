@@ -45,7 +45,29 @@ class AuditEntry(BaseModel):
     email_body_preview: Optional[str]
     send_status: Literal["sent", "dry_run", "failed", "escalated", "skipped"]
     error_message: Optional[str] = None
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=datetime.now)
+
+class WorkflowLog(BaseModel):
+    workflow_id: str
+    event_type: str  # WORKFLOW_STARTED, INVOICE_LOADED, etc.
+    invoice_no: Optional[str] = None
+    status: str
+    timestamp: datetime = Field(default_factory=datetime.now)
+
+class AILog(BaseModel):
+    workflow_id: str
+    invoice_no: str
+    model: str
+    latency_ms: int
+    validation: str
+    timestamp: datetime = Field(default_factory=datetime.now)
+
+class SecurityLog(BaseModel):
+    event_type: str # PROMPT_INJECTION, PII_MASKING
+    invoice_no: Optional[str] = None
+    detected_text: Optional[str] = None
+    risk_level: str
+    timestamp: datetime = Field(default_factory=datetime.now)
 
 class AgentState(BaseModel):
     """LangGraph state passed between nodes."""

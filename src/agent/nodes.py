@@ -4,21 +4,34 @@ from src.ingestion.csv_loader import load_invoices_from_csv
 from src.agent.classifier import classify_record, get_tone
 from src.llm.client import generate_email
 from src.email_engine.sender import send_email
-from src.audit.logger import log_audit_entry
+from src.audit.logger import log_audit_entry, log_event
+from src.models import AgentState, AuditEntry, EscalationStage, WorkflowLog
 from src.config import config
 
 logger = logging.getLogger(__name__)
 
 def ingest_node(state: AgentState) -> AgentState:
     """Load invoices if not already provided in state."""
+    if not state.run_id:
+        state.run_id = f"WF-{uuid.uuid4().hex[:8].upper()}"
+
+    log_event(WorkflowLog(workflow_id=state.run_id, event_type="WORKFLOW_STARTED", status="SUCCESS"), "workflow")
+
     if not state.records:
         state.records = load_invoices_from_csv(config.CSV_PATH)
+        log_event(WorkflowLog(workflow_id=state.run_id, event_type="INVOICES_LOADED", status="SUCCESS"), "workflow")
     return state
 
 def classify_node(state: AgentState) -> AgentState:
     """Classify the current record."""
     if state.current_record:
         state.current_record = classify_record(state.current_record)
+        log_event(WorkflowLog(
+            workflow_id=state.run_id, 
+            event_type="INVOICE_CLASSIFIED", 
+            invoice_no=state.current_record.invoice_no,
+            status="SUCCESS"
+        ), "workflow")
     return state
 
 def generate_email_node(state: AgentState) -> AgentState:

@@ -1,12 +1,14 @@
 import json
 import logging
+import time
 from langchain_nvidia_ai_endpoints import ChatNVIDIA
 from langchain_community.cache import SQLiteCache
 from langchain_core.globals import set_llm_cache
 from src.config import config
-from src.models import EmailOutput, InvoiceRecord
+from src.models import EmailOutput, InvoiceRecord, AILog
 from src.llm.prompts import SYSTEM_PROMPT, STAGE_PROMPTS
 from src.agent.classifier import get_tone
+from src.audit.logger import log_event
 
 # Enable SQLite caching for dev
 set_llm_cache(SQLiteCache(database_path=".langchain_cache.db"))
@@ -14,7 +16,6 @@ set_llm_cache(SQLiteCache(database_path=".langchain_cache.db"))
 logger = logging.getLogger(__name__)
 
 # Initialize NVIDIA NIM client
-# Note: Ensure NVIDIA_API_KEY is set in your environment
 llm = ChatNVIDIA(
     model=config.LLM_MODEL,
     nvidia_api_key=config.NVIDIA_API_KEY,
@@ -24,6 +25,7 @@ llm = ChatNVIDIA(
 
 def generate_email(record: InvoiceRecord) -> EmailOutput:
     """Generate a personalised email for the given invoice record using NVIDIA NIM."""
+    start_time = time.time()
     tone = get_tone(record.stage)
     prompt_template = STAGE_PROMPTS.get(tone)
     
@@ -50,6 +52,7 @@ def generate_email(record: InvoiceRecord) -> EmailOutput:
                 ("user", user_prompt),
             ]
             response = llm.invoke(messages)
+            latency = int((time.time() - start_time) * 1000)
             
             raw_json = response.content.strip()
             # Strip any accidental markdown fences
@@ -70,6 +73,16 @@ def generate_email(record: InvoiceRecord) -> EmailOutput:
                     raise
             
             email_output = EmailOutput(**data)
+            
+            # Log AI success
+            log_event(AILog(
+                workflow_id=getattr(record, 'workflow_id', 'MANUAL-DRAFT'),
+                invoice_no=record.invoice_no,
+                model=config.LLM_MODEL,
+                latency_ms=latency,
+                validation="PASSED"
+            ), "ai")
+            
             return email_output
             
         except Exception as e:
@@ -82,4 +95,4 @@ def generate_email(record: InvoiceRecord) -> EmailOutput:
                     tone_confirmed="polite_firm",
                     cta="Please pay via the link below."
                 )
-    return None # Should not reach here
+    return None
