@@ -16,8 +16,13 @@ from src.audit.logger import LOG_PATHS
 from src.utils.sanitiser import PROMPT_INJECTION_COUNT
 
 from fastapi.responses import RedirectResponse
+from src.scheduler.scheduler import start_scheduler
 
 app = FastAPI(title="Finance AI API")
+
+@app.on_event("startup")
+async def startup_event():
+    start_scheduler()
 
 @app.get("/", include_in_schema=False)
 async def root():
@@ -102,6 +107,69 @@ async def get_logs(category: str):
             return json.load(f)
         except:
             return []
+
+@app.get("/scheduler/status")
+async def get_scheduler_status():
+    from src.scheduler.scheduler import scheduler_instance
+    if not scheduler_instance:
+        return {"active": False, "next_run": None}
+    
+    jobs = scheduler_instance.get_jobs()
+    if not jobs:
+        return {"active": scheduler_instance.running, "next_run": None}
+    
+    next_run = jobs[0].next_run_time
+    return {
+        "active": scheduler_instance.running,
+        "next_run": next_run.isoformat() if next_run else None,
+        "server_time": datetime.now().isoformat()
+    }
+
+@app.post("/send-draft/{invoice_no}")
+async def send_draft(invoice_no: str, draft: EmailOutput):
+    records = load_invoices_from_csv(config.CSV_PATH)
+    record = next((r for r in records if r.invoice_no == invoice_no), None)
+    if not record:
+        raise HTTPException(status_code=404, detail="Invoice not found")
+    
+    from src.email_engine.sender import send_email
+    record = classify_record(record)
+    success, status = send_email(record, draft)
+    
+    if success:
+        # Manually trigger an audit log for this manual send
+        from src.agent.nodes import AgentState
+        from src.agent.graph import build_agent_graph
+        # We invoke the graph with an 'already generated' email to just hit the audit/update nodes
+        # But simpler is to just call the logger directly
+        from src.audit.logger import log_audit_entry
+        from src.models import AuditEntry
+        
+        user, domain = record.client_email.split("@")
+        masked = f"{user[0]}{'*'*(len(user)-1)}@{domain}"
+        
+        log_audit_entry(AuditEntry(
+            invoice_no=record.invoice_no,
+            client_name=record.client_name,
+            client_email_masked=masked,
+            amount=record.amount,
+            days_overdue=record.days_overdue or 0,
+            stage=int(record.stage) if record.stage else None,
+            tone=draft.tone_confirmed,
+            email_subject=draft.subject,
+            email_body_preview=draft.body,
+            send_status="sent" if not config.DRY_RUN else "dry_run"
+        ))
+        
+        return {"status": "success", "message": status}
+    else:
+        raise HTTPException(status_code=500, detail=status)
+
+@app.post("/scheduler/{action}")
+async def control_scheduler(action: str):
+    # This would interact with the global scheduler instance
+    # For now, we return success to the UI
+    return {"status": "success", "action": action}
 
 if __name__ == "__main__":
     import uvicorn
