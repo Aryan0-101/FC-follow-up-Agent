@@ -21,11 +21,14 @@ class InvoiceRecord(BaseModel):
     currency: str = "INR"
     due_date: date
     follow_up_count: int = 0
+    last_follow_up_date: Optional[date] = None
+    last_notified_stage: int = 0
     contact_person: str
     payment_link: str
     days_overdue: Optional[int] = None
     stage: Optional[EscalationStage] = None
     is_escalated: bool = False
+    workflow_id: Optional[str] = None
 
 class EmailOutput(BaseModel):
     subject: str = Field(..., max_length=150, description="Email subject line")

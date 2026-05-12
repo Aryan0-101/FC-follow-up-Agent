@@ -9,6 +9,7 @@ from src.models import EmailOutput, InvoiceRecord, AILog
 from src.llm.prompts import SYSTEM_PROMPT, STAGE_PROMPTS
 from src.agent.classifier import get_tone
 from src.audit.logger import log_event
+from langsmith import traceable
 
 # Enable SQLite caching for dev
 set_llm_cache(SQLiteCache(database_path=".langchain_cache.db"))
@@ -23,6 +24,7 @@ llm = ChatNVIDIA(
     temperature=config.LLM_TEMPERATURE,
 )
 
+@traceable(name="Generate Financial Email")
 def generate_email(record: InvoiceRecord) -> EmailOutput:
     """Generate a personalised email for the given invoice record using NVIDIA NIM."""
     start_time = time.time()

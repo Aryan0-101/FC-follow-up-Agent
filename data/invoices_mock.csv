@@ -1,7 +1,17 @@
-invoice_no,client_name,client_email,amount,currency,due_date,follow_up_count,contact_person,payment_link
-INV-2024-001,Rajesh Kapoor,rajesh@kapoortech.com,45000,INR,2026-05-05,0,Mr. Kapoor,https://pay.example.com/INV-2024-001
-INV-2024-002,Priya Sharma,priya@sharmacorp.in,120000,INR,2026-04-28,1,Ms. Sharma,https://pay.example.com/INV-2024-002
-INV-2024-003,Amit Verma,amit@vermalogistics.com,78500,INR,2026-04-20,2,Mr. Verma,https://pay.example.com/INV-2024-003
-INV-2024-004,Sunita Patel,sunita@patelmfg.com,210000,INR,2026-04-10,3,Ms. Patel,https://pay.example.com/INV-2024-004
-INV-2024-005,Ravi Gupta,ravi@guptaexports.com,55000,INR,2026-03-20,4,Mr. Gupta,https://pay.example.com/INV-2024-005
-INV-2024-006,Future Client,future@client.com,10000,INR,2026-06-01,0,Mr. Future,https://pay.example.com/INV-2024-006
+invoice_no,client_name,client_email,amount,currency,due_date,follow_up_count,last_follow_up_date,last_notified_stage,contact_person,payment_link
+INV-2024-001,Rajesh Kapoor,rajesh@kapoortech.com,45000,INR,2026-05-05,1,2026-05-12,1,Mr. Kapoor,https://pay.example.com/INV-2024-001
+INV-2024-002,Priya Sharma,priya@sharmacorp.in,120000,INR,2026-04-28,1,2026-05-10,2,Ms. Sharma,https://pay.example.com/INV-2024-002
+INV-2024-003,Amit Verma,amit@vermalogistics.com,78500,INR,2026-04-20,3,2026-05-12,4,Mr. Verma,https://pay.example.com/INV-2024-003
+INV-2024-004,Sunita Patel,sunita@patelmfg.com,210000,INR,2026-04-10,4,2026-05-12,5,Ms. Patel,https://pay.example.com/INV-2024-004
+INV-2024-005,Ravi Gupta,ravi@guptaexports.com,55000,INR,2026-03-20,4,2026-05-12,5,Mr. Gupta,https://pay.example.com/INV-2024-005
+INV-2024-006,Future Client,future@client.com,10000,INR,2026-06-01,0,,0,Mr. Future,https://pay.example.com/INV-2024-006
+INV-2024-007,Acme Corp,billing@acme.com,15000,INR,2026-05-10,1,2026-05-12,1,John Doe,https://pay.example.com/INV-007
+INV-2024-008,Global Systems,finance@globalsys.net,89000,INR,2026-04-15,3,2026-05-12,4,Jane Smith,https://pay.example.com/INV-008
+INV-2024-009,Starlight Inc,contact@starlight.io,34200,INR,2026-05-11,1,2026-05-12,1,Leo Orion,https://pay.example.com/INV-009
+INV-2024-010,Nova Tech,ap@novatech.co,56700,INR,2026-05-08,1,2026-05-12,1,Sarah Nova,https://pay.example.com/INV-010
+INV-2024-011,Prime Goods,orders@prime.com,12000,INR,2026-04-01,5,2026-05-12,5,Bob Prime,https://pay.example.com/INV-011
+INV-2024-012,Swift Logistics,ops@swift.in,45000,INR,2026-05-02,1,2026-05-12,2,Rohan Swift,https://pay.example.com/INV-012
+INV-2024-013,Eco Solutions,green@eco.org,23400,INR,2026-05-09,1,2026-05-12,1,Gaia Green,https://pay.example.com/INV-013
+INV-2024-014,Urban Design,info@urban.com,67800,INR,2026-05-04,1,2026-05-12,2,Vikram Urban,https://pay.example.com/INV-014
+INV-2024-015,Sky High,admin@skyhigh.com,99000,INR,2026-04-25,2,2026-05-12,3,Anita Sky,https://pay.example.com/INV-015
+INV-2024-016,River Flow,billing@river.in,15600,INR,2026-05-07,1,2026-05-12,1,Sagar River,https://pay.example.com/INV-016

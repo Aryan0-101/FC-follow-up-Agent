@@ -299,7 +299,9 @@ const App = () => {
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                                 <div style={{ padding: '12px', backgroundColor: 'var(--bg)', borderRadius: 'var(--radius-md)' }}>
                                     <div style={{ fontSize: '11px', color: 'var(--muted)', marginBottom: '4px' }}>LLM Latency</div>
-                                    <div style={{ fontWeight: 700, fontSize: '18px' }}>{logs.ai[0]?.latency_ms || 0}ms</div>
+                                    <div style={{ fontWeight: 700, fontSize: '18px' }}>
+                                        {logs.ai.length > 0 ? logs.ai[logs.ai.length - 1].latency_ms : 0}ms
+                                    </div>
                                 </div>
                                 <div style={{ padding: '12px', backgroundColor: 'var(--bg)', borderRadius: 'var(--radius-md)' }}>
                                     <div style={{ fontSize: '11px', color: 'var(--muted)', marginBottom: '4px' }}>AI Confidence</div>
@@ -345,6 +347,17 @@ const App = () => {
                                 <div style={{ fontSize: '12px', color: 'var(--muted)', marginBottom: '4px' }}>Target Recipient</div>
                                 <div style={{ fontWeight: 600, fontSize: '14px', padding: '12px', background: 'var(--bg)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
                                     {selectedInvoice.client_name} ({selectedInvoice.client_email})
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '24px' }}>
+                                <div>
+                                    <div style={{ fontSize: '11px', color: 'var(--muted)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '4px' }}>Follow-ups Sent</div>
+                                    <div style={{ fontSize: '16px', fontWeight: 800 }}>{selectedInvoice.follow_up_count}</div>
+                                </div>
+                                <div>
+                                    <div style={{ fontSize: '11px', color: 'var(--muted)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '4px' }}>Last Interaction</div>
+                                    <div style={{ fontSize: '13px', fontWeight: 600 }}>{selectedInvoice.last_follow_up_date || 'Never'}</div>
                                 </div>
                             </div>
 

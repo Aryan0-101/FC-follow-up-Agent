@@ -36,7 +36,13 @@ def _route_by_stage(state: AgentState) -> str:
     record = state.current_record
     if not record or record.stage == EscalationStage.NOT_DUE:
         return "skip"
-    elif record.stage == EscalationStage.LEGAL:
+    
+    # Gating Logic: Only send automated email if we haven't notified for this stage yet
+    # Or if the current stage is higher than the last one notified
+    if record.stage <= record.last_notified_stage:
+        return "skip"
+        
+    if record.stage == EscalationStage.LEGAL:
         return "flag_legal"
     else:
         return "generate"

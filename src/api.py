@@ -137,6 +137,16 @@ async def send_draft(invoice_no: str, draft: EmailOutput):
     success, status = send_email(record, draft)
     
     if success:
+        # Update persistence
+        from src.ingestion.csv_loader import update_invoice_in_csv
+        update_invoice_in_csv(
+            config.CSV_PATH,
+            record.invoice_no,
+            record.follow_up_count + 1,
+            datetime.now().date(),
+            int(record.stage) # Mark this stage as notified even for manual send
+        )
+
         # Manually trigger an audit log for this manual send
         from src.agent.nodes import AgentState
         from src.agent.graph import build_agent_graph

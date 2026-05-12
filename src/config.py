@@ -39,3 +39,9 @@ class Config:
     LANGSMITH_PROJECT: str = os.getenv("LANGSMITH_PROJECT", "finance-email-agent")
 
 config = Config()
+
+# Export to environment for LangChain tracing
+if config.LANGSMITH_API_KEY:
+    os.environ["LANGCHAIN_TRACING_V2"] = "true"
+    os.environ["LANGCHAIN_API_KEY"] = config.LANGSMITH_API_KEY
+    os.environ["LANGCHAIN_PROJECT"] = config.LANGSMITH_PROJECT

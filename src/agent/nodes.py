@@ -38,6 +38,8 @@ def generate_email_node(state: AgentState) -> AgentState:
     """Generate email prose using LLM."""
     if state.current_record and state.current_record.stage != EscalationStage.LEGAL:
         try:
+            # Pass workflow ID for telemetry
+            setattr(state.current_record, 'workflow_id', state.run_id)
             state.generated_email = generate_email(state.current_record)
         except Exception as e:
             state.errors.append(f"Generation failed for {state.current_record.invoice_no}: {e}")
@@ -100,8 +102,22 @@ def audit_node(state: AgentState) -> AgentState:
     return state
 
 def update_follow_up_count_node(state: AgentState) -> AgentState:
-    """Update internal counters (in a real app, this would write back to DB)."""
+    """Update internal counters and persist to CSV."""
     if state.current_record:
+        from datetime import date
+        from src.ingestion.csv_loader import update_invoice_in_csv
+        
         state.current_record.follow_up_count += 1
+        state.current_record.last_follow_up_date = date.today()
+        # Update notified stage to current stage
+        state.current_record.last_notified_stage = int(state.current_record.stage)
         state.total_processed += 1
+        
+        update_invoice_in_csv(
+            config.CSV_PATH, 
+            state.current_record.invoice_no,
+            state.current_record.follow_up_count,
+            state.current_record.last_follow_up_date,
+            state.current_record.last_notified_stage
+        )
     return state
